@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidushi | Portfolio</title>
+
+    <!-- Meta Tags for SEO and Social Sharing -->
+    <meta name="description"
+        content="Product Designer &amp; Visual Storyteller crafting intuitive digital experiences and cinematic brand identities.">
+    <meta property="og:title" content="Vidushi | Portfolio">
+    <meta property="og:description"
+        content="Product Designer &amp; Visual Storyteller. Exploring the intersection of digital art and visual storytelling.">
+    <meta property="og:image" content="assets/profile.jpeg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vidushi | Portfolio">
+    <meta name="twitter:description" content="Product Designer &amp; Visual Storyteller.">
+    <meta name="twitter:image" content="assets/profile.jpeg">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23E60023%22/><text y=%22.9em%22 x=%2250%%22 font-size=%2270%22 text-anchor=%22middle%22 font-family=%22Outfit, sans-serif%22 font-weight=%22bold%22 fill=%22white%22>V</text></svg>">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#E60023',
+                            600: '#ad081b',
+                        },
+                        gray: {
+                            950: '#000000',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Pinterest-style masonry logic */
+        .masonry-grid {
+            column-count: 2;
+            column-gap: 16px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+                column-gap: 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+                column-gap: 32px;
+            }
+        }
+
+        .masonry-item {
+            display: block;
+            width: 100%;
+            break-inside: avoid;
+            margin-bottom: 24px;
+        }
+
+        /* Smooth image loading */
+        .img-loaded {
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card hover glow */
+        .card-glow {
+            position: relative;
+        }
+
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, rgba(230, 0, 35, 0.3) 50%, transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .group:hover .card-glow::before {
+            opacity: 1;
+        }
+
+        /* Card lift effect */
+        .card-lift {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        @media (hover: hover) {
+            .card-lift:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 20px 40px -12px rgba(230, 0, 35, 0.15), 0 8px 20px -8px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Category badge */
+        .category-badge {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Stagger animation */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(24px) scale(0.97);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stagger-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Subtle noise texture */
+        .noise-overlay::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.015;
+            z-index: 999;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .dark .noise-overlay::after {
+            opacity: 0.03;
+        }
+
+        /* Skills Marquee */
+        .scrolling-text {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite;
+        }
+
+        .scrolling-text:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            background: rgba(156, 163, 175, 0.1);
+            border: 1px solid rgba(156, 163, 175, 0.2);
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .dark .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+
+        /* Fix Hover: Only apply to devices that support hover (desktop) */
+        @media (hover: hover) {
+            .group:hover .group-hover-opacity {
+                opacity: 1;
+            }
+
+            .group:hover img {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Mobile specific fixes */
+        @media (max-width: 640px) {
+            .modal-content {
+                max-height: 85vh;
+            }
+        }
+
+        .animate-in {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth Theme Transition */
+        html.theme-transition,
+        html.theme-transition *,
+        html.theme-transition *::before,
+        html.theme-transition *::after {
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        #theme-toggle i {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+        }
+
+        #theme-toggle:hover i {
+            transform: rotate(15deg);
+        }
+
+        .dark #theme-toggle:hover i {
+            transform: rotate(-15deg);
+        }
+
+        /* Premium Mesh Glow */
+        @keyframes mesh-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(2%, 4%) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-2%, 2%) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        .mesh-glow {
+            filter: blur(80px);
+            opacity: 0.4;
+            mix-blend-mode: soft-light;
+            animation: mesh-float 20s infinite alternate ease-in-out;
+        }
+
+        .dark .mesh-glow {
+            opacity: 0.2;
+            mix-blend-mode: screen;
+        }
+
+        /* Quirky Notifications */
+        .notification-toast {
+            animation: toast-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes toast-in {
+            from {
+                transform: translateX(120%) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .toast-out {
+            animation: toast-out 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes toast-out {
+            from {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(120%) scale(0.9);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 font-sans antialiased selection:bg-brand-100 selection:text-brand-600 transition-colors duration-300 noise-overlay">
+
+    <!-- Premium Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-white dark:bg-gray-950">
+        <!-- Main Red Glows -->
+        <div class="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-brand-500/20 mesh-glow"
+            style="animation-delay: 0s;"></div>
+        <div class="absolute top-[40%] -right-[15%] w-[50%] h-[50%] rounded-full bg-brand-500/10 mesh-glow"
+            style="animation-delay: -5s;"></div>
+        <div class="absolute -bottom-[20%] left-[10%] w-[70%] h-[60%] rounded-full bg-brand-600/10 mesh-glow"
+            style="animation-delay: -10s;"></div>
+
+        <!-- Subtle Interactive Glow -->
+        <div id="cursor-glow"
+            class="absolute w-[600px] h-[600px] rounded-full bg-brand-500/5 dark:bg-brand-500/10 blur-[120px] opacity-0 transition-opacity duration-1000">
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="fixed bottom-6 right-6 z-[200] flex flex-col gap-4 pointer-events-none">
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="fixed top-0 w-full z-50 px-4 py-4 pointer-events-none transition-all duration-500" id="nav-wrapper">
+        <nav id="main-nav"
+            class="max-w-2xl mx-auto bg-white/70 dark:bg-black/70 backdrop-blur-2xl border border-gray-200/50 dark:border-white/10 rounded-full shadow-2xl shadow-black/10 pointer-events-auto transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-visible">
+            <div class="px-6 h-14 sm:h-16 flex items-center justify-between gap-4 relative">
+
+                <!-- Logo -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <div
+                        class="w-8 h-8 bg-brand-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-500/20">
+                        V
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div
+                    class="flex flex-1 max-w-md items-center bg-transparent rounded-full px-4 py-1.5 border border-gray-200/50 dark:border-white/10 hover:border-brand-500/30 transition-all focus-within:ring-2 focus-within:ring-brand-500/10 mx-2">
+                    <i data-lucide="search" class="w-3.5 h-3.5 text-gray-400 mr-2"></i>
+                    <input id="search-input" type="text" placeholder="Search..."
+                        class="bg-transparent border-none outline-none w-full text-xs text-gray-700 dark:text-gray-200 placeholder-gray-400">
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+                    <button id="theme-toggle"
+                        class="p-2 hover:bg-gray-100/50 dark:hover:bg-white/10 rounded-full transition-colors">
+                        <span class="block dark:hidden"><i data-lucide="moon" class="w-4 h-4 text-gray-600"></i></span>
+                        <span class="hidden dark:block"><i data-lucide="sun" class="w-4 h-4 text-gray-300"></i></span>
+                    </button>
+
+
+
+                    <div class="relative w-8 h-8 cursor-pointer transition-transform active:scale-95 shadow-sm group">
+                        <div
+                            class="w-full h-full rounded-full overflow-hidden border border-gray-200 dark:border-white/20">
+                            <img src="assets/profile.jpeg" alt="Vidushi Profile" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-0.5 -right-0.5 w-[11px] h-[11px] bg-green-500 rounded-full border-[2px] border-white dark:bg-black dark:border-black shadow-sm z-10"
+                            title="Available for work">
+                            <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-20 sm:pt-28 pb-12 min-h-screen">
+
+        <!-- Profile -->
+        <section class="max-w-4xl mx-auto px-4 py-8 sm:py-12 flex flex-col items-center text-center">
+            <div class="relative group">
+                <div
+                    class="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden mb-6 shadow-2xl ring-4 ring-white dark:ring-gray-900 transition-all group-hover:ring-brand-500/30">
+                    <img src="assets/profile.jpeg" alt="Vidushi Chaudhary" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mb-3 tracking-tight">Vidushi Chaudhary.</h1>
+            <p class="text-gray-500 dark:text-gray-400 text-base sm:text-lg mb-8 max-w-lg leading-relaxed">
+                Yes, it's a portfolio. No, it's not just a Pinterest board. <br class="hidden sm:block">
+                I'm a Product Designer who uses Psychology to make sure the &ldquo;pretty stuff&rdquo; actually works
+                for your users.
+            </p>
+
+            <!-- Skills Marquee -->
+            <div class="w-full max-w-2xl overflow-hidden mb-10 relative isolate">
+                <!-- Fade Gradients -->
+                <div
+                    class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10 pointer-events-none">
+                </div>
+                <div
+                    class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10 pointer-events-none">
+                </div>
+
+                <div class="scrolling-text flex gap-4 w-[200%]">
+                    <!-- Set 1 -->
+                    <div class="flex gap-4">
+                        <span class="skill-tag"><i data-lucide="figma" class="w-4 h-4"></i> Figma</span>
+                        <span class="skill-tag"><i data-lucide="layers" class="w-4 h-4"></i> UI/UX Design</span>
+                        <span class="skill-tag"><i data-lucide="search" class="w-4 h-4"></i> User Research</span>
+                        <span class="skill-tag"><i data-lucide="box" class="w-4 h-4"></i> Spline 3D</span>
+                        <span class="skill-tag"><i data-lucide="zap" class="w-4 h-4"></i> Prototyping</span>
+                        <span class="skill-tag"><i data-lucide="pen-tool" class="w-4 h-4"></i> Interaction Design</span>
+                    </div>
+                    <!-- Set 2 (Duplicate for seamless scrolling) -->
+                    <div class="flex gap-4">
+                        <span class="skill-tag"><i data-lucide="figma" class="w-4 h-4"></i> Figma</span>
+                        <span class="skill-tag"><i data-lucide="layers" class="w-4 h-4"></i> UI/UX Design</span>
+                        <span class="skill-tag"><i data-lucide="search" class="w-4 h-4"></i> User Research</span>
+                        <span class="skill-tag"><i data-lucide="box" class="w-4 h-4"></i> Spline 3D</span>
+                        <span class="skill-tag"><i data-lucide="zap" class="w-4 h-4"></i> Prototyping</span>
+                        <span class="skill-tag"><i data-lucide="pen-tool" class="w-4 h-4"></i> Interaction Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center gap-3">
+                <a href="https://www.behance.net/vidushichaudhary" target="_blank"
+                    class="bg-brand-500 hover:bg-brand-600 text-white font-bold w-[160px] h-[44px] rounded-[24px] transition-all shadow-lg shadow-brand-500/20 active:scale-95 flex items-center justify-center gap-2 text-[15px] tracking-wide">
+                    <img src="assets/10462347.png" alt="Behance" class="w-7 h-7 object-contain scale-[1.5]">
+                    Behance
+                </a>
+                <a href="https://www.linkedin.com/in/vidushi-chaudhary-823428203" target="_blank"
+                    class="bg-[#0a66c2] hover:bg-[#084d93] text-white font-bold w-[160px] h-[44px] rounded-[24px] transition-all shadow-lg shadow-[#0a66c2]/20 active:scale-95 flex items-center justify-center gap-2 text-[15px] tracking-wide">
+                    <svg role="img" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+
+            <!-- Filters -->
+            <div id="filter-buttons"
+                class="flex gap-2 sm:gap-3 mt-12 overflow-x-auto pb-2 w-full justify-start sm:justify-center hide-scrollbar px-4">
+                <button data-filter="all"
+                    class="filter-btn px-5 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full text-sm font-bold whitespace-nowrap shadow-md transition-all">All</button>
+                <button data-filter="UI/UX Design"
+                    class="filter-btn px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full text-sm font-bold transition-all whitespace-nowrap">UI/UX</button>
+                <button data-filter="Other Designs"
+                    class="filter-btn px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full text-sm font-bold transition-all whitespace-nowrap">Other
+                    Designs</button>
+            </div>
+        </section>
+
+        <!-- Masonry Grid -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div id="masonry-grid" class="masonry-grid">
+                <!-- Items injected by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pinterest Style Modal -->
+    <div id="project-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center p-2 sm:p-6 bg-black/60 backdrop-blur-sm animate-in duration-300">
+        <div
+            class="bg-white dark:bg-gray-900 w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row relative">
+            <button id="close-modal"
+                class="absolute top-3 right-3 z-10 p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white transition-colors shadow-md">
+                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6 text-gray-900 dark:text-white"></i>
+            </button>
+
+            <!-- Image Section -->
+            <div class="w-full md:w-3/5 bg-gray-100 dark:bg-gray-800 h-[35vh] md:h-auto overflow-hidden">
+                <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Content Section -->
+            <div class="w-full md:w-2/5 p-5 sm:p-10 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <div class="flex justify-between items-center mb-6 sm:mb-8">
+                        <div class="flex gap-2">
+                            <button
+                                class="p-2.5 sm:p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"><i
+                                    data-lucide="share" class="w-5 h-5"></i></button>
+                        </div>
+                        <a id="modal-link-top" href="#" target="_blank"
+                            class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-lg transition-all active:scale-95 text-sm sm:text-base cursor-pointer">View
+                            Case Study</a>
+                    </div>
+
+                    <div class="mb-4">
+                        <span id="modal-category"
+                            class="text-[11px] font-bold uppercase tracking-wider text-brand-500 bg-brand-500/10 px-2 py-0.5 rounded-full mb-2 inline-block"></span>
+                        <h2 id="modal-title"
+                            class="text-xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight mb-2">
+                        </h2>
+                    </div>
+
+                    <p id="modal-desc"
+                        class="text-gray-600 dark:text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-6"></p>
+
+                    <!-- Recruiter details section -->
+                    <div id="modal-details" class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 mb-6 hidden">
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">Role</p>
+                                <p id="modal-role" class="font-medium text-gray-900 dark:text-gray-200"></p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">Timeline
+                                </p>
+                                <p id="modal-timeline" class="font-medium text-gray-900 dark:text-gray-200"></p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">Tools &
+                                    Methods</p>
+                                <p id="modal-tools" class="font-medium text-gray-900 dark:text-gray-200"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 mb-6 sm:mb-8">
+                        <div
+                            class="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-gray-100 dark:border-gray-800">
+                            <img src="assets/profile.jpeg" alt="Vidushi Chaudhary" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base">Vidushi Chaudhary
+                            </p>
+                            <p class="text-xs sm:text-sm text-gray-500">Product Designer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a id="modal-link" href="#" target="_blank"
+                    class="w-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-bold py-3.5 sm:py-4 px-5 sm:px-6 rounded-xl sm:rounded-2xl transition-all flex items-center justify-between group">
+                    <span class="flex items-center gap-2 text-sm sm:text-base">
+                        <i data-lucide="external-link" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        View on Behance
+                    </span>
+                    <i data-lucide="chevron-right"
+                        class="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-12 flex flex-col items-center gap-4 text-gray-400 dark:text-gray-600">
+        <p class="text-xs font-medium">&copy; <span id="year"></span> Vidushi Chaudhary</p>
+    </footer>
+
+    <script>
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                html.classList.add('theme-transition');
+                html.classList.toggle('dark');
+                localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+                setTimeout(() => {
+                    html.classList.remove('theme-transition');
+                }, 500);
+            });
+        }
+
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Quirky Notifications Data (must be defined before use in notification handler)
+        const quirkyNotifications = [
+            { title: "Recruiter Alert!", message: "Someone from Netflix just viewed your profile (probably).", icon: "eye" },
+            { title: "Opportunity Knocks", message: "A CEO is definitely thinking about hiring you right now.", icon: "zap" },
+            { title: "Portfolio 10/10", message: "Your portfolio is looking dangerously good today.", icon: "sparkles" }
+        ];
+
+        const portfolioData = [
+            {
+                title: "DreamCipher",
+                category: "UI/UX Design",
+                img: "assets/dream_cipher.png",
+                aspect: "square",
+                link: "https://www.behance.net/gallery/221960897/DreamCipher",
+                desc: "Dreamcipher is a dream journaling app that helps users interpret their dreams using AI-driven insights and interactive visualization. It combines subconscious analysis with gamification to make self-reflection engaging and meaningful. Designed for users interested in psychology and personal growth, it turns abstract dreams into a personalized, immersive experience.",
+                role: "Lead Product Designer",
+                timeline: "8 Weeks",
+                tools: "Figma, Notion, Protopie"
+            },
+            {
+                title: "RecallNest",
+                category: "UI/UX Design",
+                img: "assets/recall_nest.png",
+                aspect: "landscape",
+                link: "https://www.behance.net/gallery/232306465/RecallNest",
+                desc: "RecallNest is a memory-focused app designed to support elderly individuals with early-stage dementia and their caregivers. The app combines emotional connection, cognitive stimulation, and personalized content to enhance quality of life.",
+                role: "UX Researcher & Designer",
+                timeline: "12 Weeks",
+                tools: "Figma, User Interviews, Usability Testing"
+            },
+            {
+                title: "PsyNexus",
+                category: "UI/UX Design",
+                img: "assets/psy_nexus.png",
+                aspect: "portrait",
+                link: "https://www.behance.net/gallery/221989939/PsyNexus",
+                desc: "PsyNexus is a community-driven platform designed for young psychologists in India to connect, find job opportunities, and access mentorship. It brings together career resources, discussion forums, and personalized support in one space, helping users navigate and grow in the field of psychology.",
+                role: "Brand Identity & UI Design",
+                timeline: "6 Weeks",
+                tools: "Adobe Illustrator, Figma"
+            },
+            {
+                title: "ExploreHood",
+                category: "UI/UX Design",
+                img: "assets/explore_hood.png",
+                aspect: "square",
+                link: "https://www.behance.net/gallery/232406079/ExploreHood",
+                desc: "Explore Hood is a tablet-based app designed for school children to discover their neighborhood through an interactive map. The app uses illustrations and simple information cards to help kids learn about places around them - like parks, markets, schools, and more.",
+                role: "Product Designer",
+                timeline: "4 Weeks",
+                tools: "Figma, Adobe Fresco"
+            },
+            {
+                title: "Cancer (Typography and Layout)",
+                category: "Other Designs",
+                img: "assets/cancer.png",
+                aspect: "landscape",
+                link: "https://www.behance.net/gallery/221822079/Cancer-Typography-and-Layout",
+                desc: "A typography zine on the zodiac sign Cancer, where I translated emotion into visual storytelling through type, designing everything from cover to layouts and graphics.",
+                role: "Visual Designer",
+                timeline: "2 Weeks",
+                tools: "InDesign, Photoshop, Illustrator"
+            },
+            {
+                title: "Interactive 3D Zoo Landscape",
+                category: "Other Designs",
+                img: "assets/zoo_landscape.png",
+                aspect: "landscape",
+                link: "https://www.behance.net/gallery/221811231/Interactive-3D-Zoo-Landscape/modules/1266677389",
+                desc: "A playful 3D landscape created in Spline, where children can explore and interact with animals to learn more about them. Each interaction reveals information about the selected animal, turning learning into an immersive and engaging experience.",
+                role: "3D Digital Artist",
+                timeline: "3 Weeks",
+                tools: "Spline 3D, Figma"
+            }
+        ];
+
+        const gridContainer = document.getElementById('masonry-grid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('search-input');
+        const modal = document.getElementById('project-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalLink = document.getElementById('modal-link');
+        const closeModal = document.getElementById('close-modal');
+
+        const modalLinkTop = document.getElementById('modal-link-top');
+
+        let currentFilter = 'all';
+
+        function openProject(item) {
+            modalImg.src = item.img;
+            modalTitle.textContent = item.title;
+            modalDesc.textContent = item.desc;
+            modalLink.href = item.link;
+            if (modalLinkTop) modalLinkTop.href = item.link;
+
+            const categoryEl = document.getElementById('modal-category');
+            if (categoryEl) categoryEl.textContent = item.category;
+
+            const detailsEl = document.getElementById('modal-details');
+            if (item.role && item.timeline && item.tools && detailsEl) {
+                document.getElementById('modal-role').textContent = item.role;
+                document.getElementById('modal-timeline').textContent = item.timeline;
+                document.getElementById('modal-tools').textContent = item.tools;
+                detailsEl.classList.remove('hidden');
+            } else if (detailsEl) {
+                detailsEl.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        if (closeModal) {
+            closeModal.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            });
+        }
+
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Scroll Reveal Logic
+        const observerOptions = { threshold: 0.1 };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-12');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        function renderGrid(filter = 'all', query = '') {
+            gridContainer.innerHTML = '';
+
+            let filteredData = filter === 'all'
+                ? portfolioData
+                : portfolioData.filter(item => item.category === filter);
+
+            if (query) {
+                const lowQuery = query.toLowerCase();
+                filteredData = filteredData.filter(item =>
+                    item.title.toLowerCase().includes(lowQuery) ||
+                    item.category.toLowerCase().includes(lowQuery) ||
+                    item.desc.toLowerCase().includes(lowQuery)
+                );
+            }
+
+            if (filteredData.length === 0) {
+                gridContainer.className = 'flex flex-col items-center justify-center py-20 text-center w-full';
+                gridContainer.innerHTML = `
+                    <div class="max-w-md animate-in px-4">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="sparkles" class="w-8 h-8 sm:w-10 sm:h-10 text-brand-500"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-2">Project not found?</h3>
+                        <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
+                            I haven't made that <em>yet</em>, but honestly? I definitely could. <br class="hidden sm:block">
+                            <span class="font-bold text-brand-500">Hire me and let's build it together!</span>
+                        </p>
+                        <a href="mailto:Vidushi2106@gmail.com" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-3 px-8 rounded-full transition-all active:scale-95 shadow-lg inline-block">
+                            Hire Me
+                        </a>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            gridContainer.className = 'masonry-grid';
+
+            filteredData.forEach((item, index) => {
+                const article = document.createElement('article');
+                article.className = 'masonry-item group cursor-pointer stagger-item';
+                article.style.transitionDelay = `${index * 80}ms`;
+                article.onclick = () => openProject(item);
+
+                article.innerHTML = `
+                    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-800/60 card-lift card-glow">
+                        <div class="w-full overflow-hidden">
+                            <img src="${item.img}" alt="${item.title}" loading="lazy" class="w-full h-auto block transition-transform duration-700" onload="this.closest('.relative').classList.add('img-loaded')">
+                        </div>
+
+                        <div class="group-hover-opacity absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-between p-3 sm:p-5 pointer-events-none md:pointer-events-auto">
+                            <div class="flex justify-end">
+                                <button class="bg-brand-500 text-white font-bold py-2 px-5 rounded-full shadow-lg shadow-brand-500/30 transform -translate-y-2 transition-all duration-300 text-[11px] opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 hover:bg-brand-600 active:scale-95" onclick="event.stopPropagation(); window.open('${item.link}', '_blank');">View Case Study</button>
+                            </div>
+                            <div class="self-start">
+                                <span class="category-badge inline-block bg-white/20 dark:bg-white/10 text-white text-[11px] font-semibold px-3 py-1 rounded-full opacity-0 translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300 delay-75">${item.category}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 px-1 text-left">
+                        <h3 class="font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base leading-tight truncate group-hover:text-brand-500 transition-colors duration-300">${item.title}</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-400 dark:text-gray-500 font-medium mt-1 uppercase tracking-wider">${item.category}</p>
+                    </div>
+                `;
+                gridContainer.appendChild(article);
+
+                // Trigger stagger animation
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        article.classList.add('visible');
+                    });
+                });
+            });
+            lucide.createIcons();
+        }
+
+
+        // Header Expansion Logic
+        const mainNav = document.getElementById('main-nav');
+        const navWrapper = document.getElementById('nav-wrapper');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            if (scrollY > 50) {
+                mainNav.style.maxWidth = '95%';
+                navWrapper.style.padding = '0.5rem 1rem';
+            } else {
+                mainNav.style.maxWidth = '672px';
+                navWrapper.style.padding = '1rem';
+            }
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                renderGrid(currentFilter, e.target.value);
+            });
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentFilter = btn.getAttribute('data-filter');
+
+                filterButtons.forEach(b => {
+                    b.classList.remove('bg-gray-900', 'dark:bg-white', 'text-white', 'dark:text-gray-900', 'shadow-md');
+                    b.classList.add('text-gray-600', 'dark:text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
+                });
+                btn.classList.add('bg-gray-900', 'dark:bg-white', 'text-white', 'dark:text-gray-900', 'shadow-md');
+                btn.classList.remove('text-gray-600', 'dark:text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
+
+                renderGrid(currentFilter, searchInput.value);
+            });
+        });
+
+        // Mouse Glow Logic
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            if (!cursorGlow) return;
+            const { clientX, clientY } = e;
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.left = `${clientX - 300}px`;
+            cursorGlow.style.top = `${clientY - 300}px`;
+        });
+
+        // Notification Container
+        const notificationContainer = document.getElementById('notification-container');
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid('all');
+
+            // Initial text animations
+            const heroSection = document.querySelector('section');
+            if (heroSection) {
+                heroSection.classList.add('animate-in');
+            }
+        });
+    </script>
+</body>
+
+</html>
